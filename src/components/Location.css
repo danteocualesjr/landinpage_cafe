@@ -20,6 +20,13 @@
   overflow: hidden;
   height: 520px;
   box-shadow: var(--shadow-lg);
+  transition: all 0.4s var(--ease-out);
+  border: 1px solid rgba(26, 15, 10, 0.06);
+}
+
+.location__map:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-2px);
 }
 
 .location__map iframe {
@@ -43,11 +50,19 @@
   transition: all 0.3s var(--ease-out);
 }
 
+.location__card {
+  cursor: pointer;
+}
+
 .location__card:hover {
   background: var(--cream);
-  transform: translateX(6px);
-  box-shadow: var(--shadow-md);
-  border-color: rgba(200, 149, 108, 0.15);
+  transform: translateX(8px) translateY(-2px);
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(200, 149, 108, 0.1);
+  border-color: rgba(200, 149, 108, 0.2);
+}
+
+.location__card:active {
+  transform: translateX(4px) translateY(0);
 }
 
 .location__card-icon {
@@ -83,6 +98,8 @@
 
 .location__card:hover .location__card-icon {
   color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(200, 149, 108, 0.3);
 }
 
 .location__card:hover .location__card-icon::before {
@@ -90,7 +107,7 @@
 }
 
 .location__card:hover .location__card-icon svg {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.15) rotate(5deg);
 }
 
 .location__card h4 {

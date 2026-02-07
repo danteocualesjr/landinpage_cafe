@@ -122,10 +122,18 @@
   transition: transform 0.4s var(--ease-out);
 }
 
+.about__value {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.about__value:hover {
+  transform: translateY(-4px);
+}
+
 .about__value:hover .about__value-icon {
   color: var(--white);
-  transform: translateY(-4px) rotate(5deg);
-  box-shadow: 0 8px 24px rgba(200, 149, 108, 0.25);
+  transform: translateY(-6px) rotate(5deg) scale(1.05);
+  box-shadow: 0 12px 32px rgba(200, 149, 108, 0.35);
 }
 
 .about__value:hover .about__value-icon::before {

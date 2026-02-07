@@ -133,7 +133,8 @@
 
 .footer__links-group ul li a:hover {
   color: var(--white);
-  transform: translateX(4px);
+  transform: translateX(6px);
+  text-shadow: 0 0 8px rgba(200, 149, 108, 0.3);
 }
 
 .footer__links-group ul li a:hover::after {

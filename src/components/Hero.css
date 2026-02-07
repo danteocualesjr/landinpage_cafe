@@ -106,6 +106,7 @@
   color: var(--coffee-dark);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(200, 149, 108, 0.2);
 }
 
 .hero__btn--primary::before {
@@ -117,13 +118,31 @@
   transition: opacity 0.4s var(--ease-out);
 }
 
+.hero__btn--primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent-copper) 0%, var(--accent-gold) 100%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+  z-index: -1;
+}
+
 .hero__btn--primary:hover::before {
   opacity: 1;
 }
 
+.hero__btn--primary:hover::after {
+  opacity: 1;
+}
+
 .hero__btn--primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(200, 149, 108, 0.3);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(200, 149, 108, 0.4), 0 0 0 1px rgba(200, 149, 108, 0.1);
+}
+
+.hero__btn--primary:active {
+  transform: translateY(-1px) scale(1);
 }
 
 .hero__btn--primary span {
@@ -135,12 +154,19 @@
   background: transparent;
   color: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .hero__btn--ghost:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.hero__btn--ghost:active {
+  transform: translateY(-1px);
 }
 
 .hero__scroll-hint {
@@ -149,14 +175,29 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  background: none;
-  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 1rem;
+  padding: var(--space-sm);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   animation: heroBounce 2s ease-in-out infinite 2s;
+  transition: all 0.3s var(--ease-out);
 }
 
 .hero__scroll-hint:hover {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateX(-50%) translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes heroFadeIn {

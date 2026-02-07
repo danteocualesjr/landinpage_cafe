@@ -38,9 +38,13 @@
   opacity: 1;
 }
 
+.testimonials__card {
+  cursor: default;
+}
+
 .testimonials__card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(200, 149, 108, 0.1);
+  transform: translateY(-6px) scale(1.01);
 }
 
 .testimonials__quote-icon {
@@ -124,11 +128,20 @@
   transition: all 0.3s var(--ease-out);
 }
 
+.testimonials__arrow {
+  cursor: pointer;
+}
+
 .testimonials__arrow:hover {
   background: var(--coffee-dark);
   color: var(--white);
   border-color: var(--coffee-dark);
-  transform: scale(1.08);
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 15, 10, 0.2);
+}
+
+.testimonials__arrow:active {
+  transform: scale(1.05) translateY(0);
 }
 
 .testimonials__dots {
@@ -147,11 +160,17 @@
   transition: all 0.3s var(--ease-out);
 }
 
+.testimonials__dot:hover {
+  opacity: 0.6;
+  transform: scale(1.2);
+}
+
 .testimonials__dot--active {
   opacity: 1;
   background: var(--coffee-dark);
   width: 24px;
   border-radius: 4px;
+  transform: scale(1);
 }
 
 @keyframes testFade {

@@ -26,8 +26,10 @@
 }
 
 .gallery__item:hover {
-  border-color: rgba(200, 149, 108, 0.2);
-  box-shadow: var(--shadow-lg);
+  border-color: rgba(200, 149, 108, 0.3);
+  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(200, 149, 108, 0.15);
+  transform: translateY(-4px) scale(1.02);
+  z-index: 10;
 }
 
 .gallery__item--tall {
@@ -46,7 +48,8 @@
 }
 
 .gallery__item:hover img {
-  transform: scale(1.06);
+  transform: scale(1.1);
+  filter: brightness(1.05);
 }
 
 .gallery__item-overlay {
@@ -135,8 +138,14 @@
 }
 
 .lightbox__nav:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
   color: var(--white);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.lightbox__nav:active {
+  transform: translateY(-50%) scale(1.05);
 }
 
 .lightbox__nav--prev { left: var(--space-xl); }
