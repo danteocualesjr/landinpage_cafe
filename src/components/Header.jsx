@@ -5,6 +5,7 @@ import './Header.css';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,9 +16,54 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const sections = ['home', 'about', 'menu', 'testimonials', 'gallery', 'location', 'contact'];
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    // Set initial active section based on scroll position
+    const handleInitialScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      // If at top, set home as active
+      if (scrollY < windowHeight * 0.3) {
+        setActiveSection('home');
+      }
+    };
+    
+    handleInitialScroll();
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
     setIsMenuOpen(false);
+    setActiveSection(targetId);
     const element = document.getElementById(targetId);
     if (element) {
       const offset = 80;
@@ -47,7 +93,7 @@ const Header = () => {
               key={id}
               href={`#${id}`}
               onClick={(e) => handleNavClick(e, id)}
-              className="header__link"
+              className={`header__link ${activeSection === id ? 'header__link--active' : ''}`}
             >
               {label}
             </a>
