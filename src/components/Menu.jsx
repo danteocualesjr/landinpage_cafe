@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { FaCoffee } from 'react-icons/fa';
 import './Menu.css';
 
 const Menu = () => {
   const [activeCategory, setActiveCategory] = useState('coffee');
+  const [imageLoading, setImageLoading] = useState({});
+  const [imageErrors, setImageErrors] = useState({});
 
   const menuItems = {
     coffee: [
@@ -33,6 +36,32 @@ const Menu = () => {
     { id: 'specialty', label: 'Specialty' },
   ];
 
+  const handleImageLoad = (itemId) => {
+    setImageLoading(prev => ({ ...prev, [itemId]: false }));
+  };
+
+  const handleImageError = (itemId) => {
+    setImageLoading(prev => ({ ...prev, [itemId]: false }));
+    setImageErrors(prev => ({ ...prev, [itemId]: true }));
+  };
+
+  // Initialize loading state for current category items when category changes
+  useEffect(() => {
+    const currentItems = menuItems[activeCategory];
+    setImageLoading(prev => {
+      const newState = { ...prev };
+      let hasChanges = false;
+      currentItems.forEach(item => {
+        if (!(item.id in prev) && !imageErrors[item.id]) {
+          newState[item.id] = true;
+          hasChanges = true;
+        }
+      });
+      return hasChanges ? newState : prev;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeCategory]);
+
   return (
     <section id="menu" className="menu">
       <div className="menu__header reveal">
@@ -57,20 +86,44 @@ const Menu = () => {
       </div>
 
       <div className="menu__grid">
-        {menuItems[activeCategory].map((item, i) => (
-          <div key={item.id} className={`menu__card reveal reveal-delay-${(i % 4) + 1}`}>
-            <div className="menu__card-img">
-              <img src={item.image} alt={item.name} loading="lazy" />
-            </div>
-            <div className="menu__card-body">
-              <div className="menu__card-top">
-                <h3>{item.name}</h3>
-                <span className="menu__price">${item.price}</span>
+        {menuItems[activeCategory].map((item, i) => {
+          const isLoading = imageLoading[item.id] === true || imageLoading[item.id] === undefined;
+          const hasError = imageErrors[item.id] === true;
+
+          return (
+            <div key={item.id} className={`menu__card reveal reveal-delay-${(i % 4) + 1}`}>
+              <div className="menu__card-img">
+                {isLoading && !hasError && (
+                  <div className="menu__card-skeleton loading-shimmer" />
+                )}
+                {hasError && (
+                  <div className="menu__card-error">
+                    <FaCoffee />
+                    <span>Image unavailable</span>
+                  </div>
+                )}
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  loading="lazy"
+                  onLoad={() => handleImageLoad(item.id)}
+                  onError={() => handleImageError(item.id)}
+                  style={{
+                    opacity: isLoading ? 0 : 1,
+                    display: hasError ? 'none' : 'block',
+                  }}
+                />
               </div>
-              <p>{item.description}</p>
+              <div className="menu__card-body">
+                <div className="menu__card-top">
+                  <h3>{item.name}</h3>
+                  <span className="menu__price">${item.price}</span>
+                </div>
+                <p>{item.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
