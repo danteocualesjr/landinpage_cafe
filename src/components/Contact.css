@@ -52,6 +52,15 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  transition: all 0.3s var(--ease-out);
+  cursor: default;
+}
+
+.contact__info-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateX(4px);
 }
 
 .contact__info-label {
@@ -86,6 +95,19 @@
   margin-bottom: var(--space-xl);
   font-size: 0.9rem;
   text-align: center;
+  animation: contactSuccessSlideIn 0.4s var(--ease-out);
+  box-shadow: 0 4px 12px rgba(200, 149, 108, 0.2);
+}
+
+@keyframes contactSuccessSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .contact__field {
@@ -207,6 +229,29 @@
 .contact__submit span {
   position: relative;
   z-index: 1;
+}
+
+.contact__submit--loading {
+  cursor: wait;
+  opacity: 0.8;
+}
+
+.contact__submit--loading:hover {
+  transform: none;
+  box-shadow: 0 4px 16px rgba(200, 149, 108, 0.2);
+}
+
+.contact__submit-icon--spinning {
+  animation: contactSubmitSpin 1s linear infinite;
+}
+
+@keyframes contactSubmitSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 1024px) {

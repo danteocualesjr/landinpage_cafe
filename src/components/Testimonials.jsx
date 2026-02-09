@@ -44,8 +44,10 @@ const Testimonials = () => {
   const goTo = useCallback((idx) => {
     if (isAnimating) return;
     setIsAnimating(true);
-    setCurrent(idx);
-    setTimeout(() => setIsAnimating(false), 500);
+    setTimeout(() => {
+      setCurrent(idx);
+      setTimeout(() => setIsAnimating(false), 50);
+    }, 300);
   }, [isAnimating]);
 
   const next = useCallback(() => {
@@ -69,7 +71,7 @@ const Testimonials = () => {
         <span className="section-label">Testimonials</span>
         <h2 className="section-title">Loved by our community</h2>
 
-        <div className="testimonials__card">
+        <div className={`testimonials__card ${isAnimating ? 'testimonials__card--transitioning' : ''}`}>
           <FaQuoteLeft className="testimonials__quote-icon" />
 
           <div className="testimonials__stars">

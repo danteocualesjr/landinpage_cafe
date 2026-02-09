@@ -6,6 +6,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,11 +25,15 @@ const Contact = () => {
     return Object.keys(err).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
+      setIsSubmitting(true);
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
       console.log('Form submitted:', formData);
       setSubmitted(true);
+      setIsSubmitting(false);
       setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setSubmitted(false), 5000);
     }
@@ -110,9 +115,13 @@ const Contact = () => {
             {errors.message && <span className="contact__error">{errors.message}</span>}
           </div>
 
-          <button type="submit" className="contact__submit">
-            <FaPaperPlane />
-            Send Message
+          <button 
+            type="submit" 
+            className={`contact__submit ${isSubmitting ? 'contact__submit--loading' : ''}`}
+            disabled={isSubmitting}
+          >
+            <FaPaperPlane className={isSubmitting ? 'contact__submit-icon--spinning' : ''} />
+            <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
           </button>
         </form>
       </div>

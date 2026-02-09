@@ -6,6 +6,7 @@ const Menu = () => {
   const [activeCategory, setActiveCategory] = useState('coffee');
   const [imageLoading, setImageLoading] = useState({});
   const [imageErrors, setImageErrors] = useState({});
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const menuItems = {
     coffee: [
@@ -78,14 +79,22 @@ const Menu = () => {
           <button
             key={cat.id}
             className={`menu__tab ${activeCategory === cat.id ? 'menu__tab--active' : ''}`}
-            onClick={() => setActiveCategory(cat.id)}
+            onClick={() => {
+              if (activeCategory !== cat.id) {
+                setIsTransitioning(true);
+                setTimeout(() => {
+                  setActiveCategory(cat.id);
+                  setTimeout(() => setIsTransitioning(false), 50);
+                }, 200);
+              }
+            }}
           >
             {cat.label}
           </button>
         ))}
       </div>
 
-      <div className="menu__grid">
+      <div className={`menu__grid ${isTransitioning ? 'menu__grid--transitioning' : ''}`}>
         {menuItems[activeCategory].map((item, i) => {
           const isLoading = imageLoading[item.id] === true || imageLoading[item.id] === undefined;
           const hasError = imageErrors[item.id] === true;
