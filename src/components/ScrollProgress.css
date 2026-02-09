@@ -1,0 +1,54 @@
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(26, 15, 10, 0.05);
+  z-index: 1001;
+  pointer-events: none;
+}
+
+.scroll-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-gold) 0%, var(--accent-copper) 100%);
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px rgba(200, 149, 108, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-progress__bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: scrollProgressShine 2s infinite;
+}
+
+@keyframes scrollProgressShine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress__bar {
+    transition: none;
+  }
+  
+  .scroll-progress__bar::after {
+    animation: none;
+  }
+}

@@ -9,6 +9,7 @@ import Gallery from './components/Gallery';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
+import ScrollProgress from './components/ScrollProgress';
 
 function App() {
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <div className="App">
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />
